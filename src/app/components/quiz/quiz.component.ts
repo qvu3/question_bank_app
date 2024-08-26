@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../services/question.service';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-quiz',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
