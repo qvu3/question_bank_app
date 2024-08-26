@@ -1,0 +1,11 @@
+<h2>Question Bank</h2>
+<ul>
+  <li *ngFor="let question of questions">
+    {{ question.questionText }}
+    <ul>
+      <li *ngFor="let option of question.options">{{ option }}</li>
+    </ul>
+    <p><strong>Answer:</strong> {{ question.correctAnswer }}</p>
+    <p><em>{{ question.explanation }}</em></p>
+  </li>
+</ul>

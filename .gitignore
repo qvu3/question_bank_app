@@ -1,42 +1,66 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
 # Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out/
 
-# Node
-/node_modules
-npm-debug.log
+# Node.js dependencies and logs
+/node_modules/
+/jspm_packages/
+npm-debug.log*
 yarn-error.log
+.npm
 
-# IDEs and editors
+# Logs and runtime data
+logs
+*.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories and builds
+bower_components/
+/libpeerconnection.log
+testem.log
+
+# Coverage directories
+/coverage
+/lib-cov/
+.grunt
+
+# Angular specific cache and build
+/.angular/cache
+
+# IDEs and editors settings
 .idea/
-.project
+/.project
 .classpath
 .c9/
 *.launch
 .settings/
+/.history/
+/.vscode/
+*.sublime-project
 *.sublime-workspace
 
-# Visual Studio Code
-.vscode/*
+# VS Code specific settings (allow settings, tasks, launch, and extensions to be versioned)
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Miscellaneous
+.sass-cache/
+/connect.lock
+.lock-wscript
+
+# Exclude compiled JavaScript files and sourcemaps
+/src/**/*.js
+/src/**/*.js.map

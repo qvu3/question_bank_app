@@ -1,0 +1,16 @@
+<div *ngIf="!showResults">
+    <h2>Quiz</h2>
+    <p>{{ questions[currentQuestionIndex]?.questionText }}</p>
+    <ul>
+      <li *ngFor="let option of questions[currentQuestionIndex]?.options">
+        <button (click)="submitAnswer(option)">{{ option }}</button>
+      </li>
+    </ul>
+  </div>
+  
+  <div *ngIf="showResults">
+    <h2>Quiz Results</h2>
+    <p>Your score: {{ score }} / {{ questions.length }}</p>
+    <button (click)="restartQuiz()">Restart Quiz</button>
+  </div>
+  
