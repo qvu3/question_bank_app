@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service'; // Import your AuthService
 import { CommonModule } from '@angular/common';
@@ -17,7 +17,9 @@ export class NavbarComponent {
   constructor(private authService: AuthService, private router: Router) {
     this.authService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
-      this.userRole = this.authService.getUserRole();
+    });
+    this.authService.userRole$.subscribe(role => {
+      this.userRole = role;
     });
   }
 

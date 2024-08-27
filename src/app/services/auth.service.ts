@@ -10,7 +10,8 @@ export class AuthService {
   private apiUrl = 'http://localhost:5000/api/users'; // Update with your backend URL
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
-  private userRole: string = '';
+  private userRoleSubject = new BehaviorSubject<string>('');
+  userRole$ = this.userRoleSubject.asObservable();
 
   constructor(private http: HttpClient) { 
     if (this.isBrowser()) {
@@ -19,7 +20,7 @@ export class AuthService {
       const role = localStorage.getItem('role');
       if (token && role) {
         this.isLoggedInSubject.next(true);
-        this.userRole = role;
+        this.userRoleSubject.next(role);
       }
     }
   }
@@ -36,7 +37,7 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('role', response.role);
         this.isLoggedInSubject.next(true);
-        this.userRole = response.role;
+        this.userRoleSubject.next(response.role);
       })
     );
   }
@@ -47,11 +48,11 @@ export class AuthService {
       localStorage.removeItem('role');
     }
     this.isLoggedInSubject.next(false);
-    this.userRole = '';
+    this.userRoleSubject.next('');
   }
 
   getUserRole(): string {
-    return this.userRole;
+    return this.userRoleSubject.value;
   }
 
   isAuthenticated(): boolean {

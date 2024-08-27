@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 // Debugging: Print environment variables on server start
-console.log('Environment Variables:', process.env);
+// console.log('Environment Variables:', process.env);
 
 // Middleware
 app.use(cors());
