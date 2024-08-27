@@ -1,0 +1,75 @@
+<h2>Admin Dashboard</h2>
+
+<!-- Add or Edit Question Form -->
+<form *ngIf="!editMode; else editForm">
+  <h3>Add New Question</h3>
+  
+  <label>Question Text:</label>
+  <input type="text" [(ngModel)]="newQuestion.questionText" name="questionText" required>
+
+  <label>Options:</label>
+  <div *ngFor="let option of newQuestion.options; let i = index; trackBy: trackByIndex">
+    <input type="text" [(ngModel)]="newQuestion.options[i]" [ngModelOptions]="{standalone: true}">
+  </div>
+  <button type="button" (click)="newQuestion.options.push('')">Add Option</button>
+
+  <label>Correct Answer:</label>
+  <input type="text" [(ngModel)]="newQuestion.correctAnswer" name="correctAnswer" required>
+
+  <label>Explanation:</label>
+  <textarea [(ngModel)]="newQuestion.explanation" name="explanation"></textarea>
+
+  <label>Category:</label>
+  <input type="text" [(ngModel)]="newQuestion.category" name="category">
+
+  <label>Difficulty:</label>
+  <select [(ngModel)]="newQuestion.difficulty" name="difficulty">
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+
+  <button type="button" (click)="addQuestion()">Add Question</button>
+</form>
+
+<!-- Edit Form Template -->
+<ng-template #editForm>
+  <h3>Edit Question</h3>
+  <label>Question Text:</label>
+  <input type="text" [(ngModel)]="newQuestion.questionText" name="questionText" required>
+
+  <label>Options:</label>
+  <div *ngFor="let option of newQuestion.options; let i = index; trackBy: trackByIndex">
+    <input type="text" [(ngModel)]="newQuestion.options[i]" [ngModelOptions]="{standalone: true}">
+  </div>
+  <button type="button" (click)="newQuestion.options.push('')">Add Option</button>
+
+  <label>Correct Answer:</label>
+  <input type="text" [(ngModel)]="newQuestion.correctAnswer" name="correctAnswer" required>
+
+  <label>Explanation:</label>
+  <textarea [(ngModel)]="newQuestion.explanation" name="explanation"></textarea>
+
+  <label>Category:</label>
+  <input type="text" [(ngModel)]="newQuestion.category" name="category">
+
+  <label>Difficulty:</label>
+  <select [(ngModel)]="newQuestion.difficulty" name="difficulty">
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
+  </select>
+
+  <button type="button" (click)="updateQuestion()">Update Question</button>
+  <button type="button" (click)="resetForm()">Cancel</button>
+</ng-template>
+
+<!-- List of Questions -->
+<h3>Question List</h3>
+<ul>
+  <li *ngFor="let question of questions">
+    <strong>{{ question.questionText }}</strong>
+    <button (click)="editQuestion(question)">Edit</button>
+    <button (click)="question._id && deleteQuestion(question._id)">Delete</button>
+  </li>
+</ul>

@@ -19,4 +19,12 @@ export class QuestionService {
   addQuestion(question: Question): Observable<any> {
     return this.http.post(`${this.apiUrl}/add`, question);
   }
+
+  deleteQuestion(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${id}`);
+  }
+
+  updateQuestion(id: string, question: Question): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update/${id}`, question);
+  }
 }
