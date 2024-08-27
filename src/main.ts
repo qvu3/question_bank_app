@@ -1,14 +1,14 @@
-import { enableProdMode } from '@angular/core';
+
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http'; // Add this import
+import { provideHttpClient } from '@angular/common/http';  // Correct import for HttpClient
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 
-// Bootstrap the standalone root component with routing and HTTP Client
+// Bootstrap the application with necessary providers
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient()  
+    provideHttpClient() // Provide HttpClient
   ]
 }).catch(err => console.error(err));

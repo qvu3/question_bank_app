@@ -1,19 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../services/question.service';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { Question } from '../../models/question.model';
 
 @Component({
   selector: 'app-quiz',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
+  providers: [HttpClient],
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.css']
 })
 export class QuizComponent implements OnInit {
-  questions: any[] = [];  // Define questions as an array of any type (or more specific type if available)
+  questions: Question[] = []; 
   currentQuestionIndex: number = 0;
-  userAnswers: string[] = [];  // Define userAnswers as an array of strings
+  userAnswers: string[] = [];  
   showResults: boolean = false;
   score: number = 0;
 
@@ -21,8 +23,11 @@ export class QuizComponent implements OnInit {
 
   ngOnInit(): void {
     this.questionService.getQuestions().subscribe(
-      (data: any) => {  
+      (data: Question[]) => {  
         this.questions = data;
+        if (this.questions.length > 0) {
+          this.currentQuestionIndex = 0;
+        }
       },
       (error: any) => {
         console.error('Error fetching questions:', error);

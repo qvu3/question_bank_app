@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-interface Question {
-  questionText: string;
-  options: string[];
-  correctAnswer: string;
-  explanation?: string;
-  category?: string;
-  difficulty?: 'easy' | 'medium' | 'hard';
-}
+import { Question } from '../models/question.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  
 })
 export class QuestionService {
   private apiUrl = 'http://localhost:5000/api/questions';

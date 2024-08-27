@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'; 
 import { QuestionService } from '../../services/question.service';
-
-interface Question {
-  questionText: string;
-  options: string[];
-  correctAnswer: string;
-  explanation?: string;
-  category?: string;
-  difficulty?: 'easy' | 'medium' | 'hard';
-}
+import { Question } from '../../models/question.model';
 
 @Component({
   selector: 'app-question-list',
   standalone: true,
-  imports: [CommonModule, HttpClientModule], 
+  imports: [CommonModule],  
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.css']
 })
