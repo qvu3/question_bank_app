@@ -64,3 +64,6 @@ Thumbs.db
 # Exclude compiled JavaScript files and sourcemaps
 /src/**/*.js
 /src/**/*.js.map
+
+# Environment variables
+.env

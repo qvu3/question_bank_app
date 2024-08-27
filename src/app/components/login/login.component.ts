@@ -1,33 +1,47 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';  // Import your AuthService
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Import FormsModule for form handling
-import { AuthService } from '../../services/auth.service'; // Import your AuthService
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Import necessary modules
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username = '';
-  password = '';
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  // Method to handle user login
-  login() {
+  onLogin() {
     this.authService.login(this.username, this.password).subscribe(
-      response => {
-        console.log('User logged in successfully:', response);
-        alert('User logged in successfully!');
-        localStorage.setItem('token', response.token); // Save JWT token if needed
+      (response: any) => {
+        console.log('Login successful:', response);
+
+        // Save token or user data as needed
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('role', response.role); // Assuming role is returned in response
+
+        // Redirect based on user role
+        if (response.role === 'admin') {
+          this.router.navigate(['/admin-dashboard']);
+        } else {
+          this.router.navigate(['/question-list']);
+        }
       },
-      error => {
-        console.error('Error logging in:', error);
-        alert('Invalid credentials. Please try again.');
+      (error) => {
+        console.error('Login failed:', error);
+        this.errorMessage = 'Invalid username or password. Please try again.';
       }
     );
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 }
