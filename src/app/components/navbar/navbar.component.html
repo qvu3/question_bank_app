@@ -1,0 +1,18 @@
+<nav>
+    <ul>
+      <li><button (click)="navigateTo('/home')">Home</button></li>
+      <li *ngIf="!isLoggedIn"><button (click)="navigateTo('/login')">Login</button></li>
+  
+      <!-- For logged-in students -->
+      <li *ngIf="isLoggedIn && userRole === 'student'"><button (click)="navigateTo('/question-list')">Question Bank</button></li>
+      <li *ngIf="isLoggedIn && userRole === 'student'"><button (click)="navigateTo('/quiz')">Quiz</button></li>
+      <li *ngIf="isLoggedIn && userRole === 'student'"><button (click)="navigateTo('/profile')">Profile</button></li>
+  
+      <!-- For logged-in admins -->
+      <li *ngIf="isLoggedIn && userRole === 'admin'"><button (click)="navigateTo('/admin-dashboard')">Management</button></li>
+  
+      <!-- Logout button for logged-in users -->
+      <li *ngIf="isLoggedIn"><button (click)="logout()">Logout</button></li>
+    </ul>
+  </nav>
+  

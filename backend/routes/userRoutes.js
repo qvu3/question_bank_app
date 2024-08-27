@@ -4,16 +4,25 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// Fallback to ensure JWT secret is defined
+const JWT_SECRET = process.env.JWT_SECRET || 'default_secret_key';
+
+if (JWT_SECRET === 'default_secret_key') {
+  console.warn('Warning: Using fallback JWT secret. Make sure JWT_SECRET is defined in your .env file.');
+}
+
 // User registration
 router.post('/register', async (req, res) => {
-  const { username, password, email, role } = req.body; // Add role if needed
+  const { username, password, email, role } = req.body; // Include role if needed
   try {
     // Check if the user already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) return res.status(400).json({ error: 'Username already exists' });
 
-    const user = new User({ username, password: hashedPassword, email, role }); // Store hashed password and role
-    await user.save();
+    // Create a new user instance
+    const user = new User({ username, password, email, role }); 
+    await user.save(); 
+
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Error during registration:', error);
@@ -32,10 +41,13 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
+    // Log to check if JWT_SECRET is correctly loaded
+    console.log('JWT Secret:', JWT_SECRET);
+
     // Create a JWT token with the user's ID and role
     const token = jwt.sign(
       { id: user._id, role: user.role },  // Include role in the payload
-      process.env.JWT_SECRET,
+      JWT_SECRET, // Use the secret key
       { expiresIn: '1h' }
     );
 
@@ -45,6 +57,5 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Login failed' });
   }
 });
-
 
 module.exports = router;

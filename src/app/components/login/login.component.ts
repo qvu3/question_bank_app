@@ -31,7 +31,7 @@ export class LoginComponent {
         if (response.role === 'admin') {
           this.router.navigate(['/admin-dashboard']);
         } else {
-          this.router.navigate(['/question-list']);
+          this.router.navigate(['/home']);
         }
       },
       (error) => {
