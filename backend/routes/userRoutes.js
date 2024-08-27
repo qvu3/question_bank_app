@@ -13,14 +13,14 @@ if (JWT_SECRET === 'default_secret_key') {
 
 // User registration
 router.post('/register', async (req, res) => {
-  const { username, password, email, role } = req.body; // Include role if needed
+  const { username, password, email} = req.body; 
   try {
     // Check if the user already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) return res.status(400).json({ error: 'Username already exists' });
 
     // Create a new user instance
-    const user = new User({ username, password, email, role }); 
+    const user = new User({ username, password, email, role: 'student' }); 
     await user.save(); 
 
     res.status(201).json({ message: 'User registered successfully' });
@@ -42,7 +42,7 @@ router.post('/login', async (req, res) => {
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
     // Log to check if JWT_SECRET is correctly loaded
-    console.log('JWT Secret:', JWT_SECRET);
+    // console.log('JWT Secret:', JWT_SECRET);
 
     // Create a JWT token with the user's ID and role
     const token = jwt.sign(
